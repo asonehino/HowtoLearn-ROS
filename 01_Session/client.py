@@ -8,8 +8,8 @@ from pynput import keyboard
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 #서버 연결
-host = 'localhost'
-port = 12345
+host = ' 10.150.149.232'
+port = 54321
 client_socket.connect((host, port))
 print('서버에 연결')
 flagClient = True
