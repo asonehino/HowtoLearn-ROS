@@ -24,6 +24,6 @@ while flagClient:
   if (ch == 'q'):
     break
 
-client_socket.sendall('quit'.encode())
+client_socket.sendall('quit'.encode()) #quit 보내고 클로즈
 client_socket.close()
 print('끝')

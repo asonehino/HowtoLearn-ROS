@@ -21,13 +21,13 @@ while flagServer:
     if not data:
       break
 
-    rcvData = data.decode()
+    rcvData = data.decode() #데이터 디코드로 보여주기
     if not (rcvData == 'quit'):
       flagServer = False
       print('수신: ', rcvData.encode())
-    else:
+    else: #quit이면
       print('종료: ', rcvData.encode())
       break
     client_socket.sendall(data)
-    
+
 client_socket.close()
