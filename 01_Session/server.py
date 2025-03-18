@@ -2,8 +2,8 @@ import socket
 
 #binding
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-host = 'localhost'
-port = 12345
+host = '10.150.149.232'
+port = 54321
 server_socket.bind((host, port))
 
 #듣기 모드 대기
