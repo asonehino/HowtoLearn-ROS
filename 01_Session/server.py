@@ -8,7 +8,7 @@ server_socket.bind((host, port))
 
 #듣기 모드 대기
 server_socket.listen(1)
-print('서버 시작, 기다려려')
+print('서버 시작, 기다려')
 
 flagServer = True
 while flagServer:
