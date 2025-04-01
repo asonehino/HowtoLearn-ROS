@@ -1,10 +1,13 @@
 import time
 import numpy as np
+from pop import Util
+from pop import Pilot
+from IPython.display import clear_output
 import cv2
 
 def freeCam(cam, msg):
   cam.release()
-  print("\nMian thread finished: ", msg)
+  print("\nMain thread finished: ", msg)
 
 def getImg(cam):
   ret, frame = cam.read()
@@ -12,14 +15,15 @@ def getImg(cam):
     freeCam(cam, '프레임 읽기 에러')
   else:
     return frame
-
-#카메라 초기화
-vid = cv2.VideoCapture(0)
+  
+Util.enable_imshow()
+cam = Util.gstrmer(width=320, height=240)
+vid = cv2.VideoCapture(cam, cv2.CAP_GSTREAMER)
 if not vid.isOpened():
-  print("카메라 없다")
+  print("not found camera")
   exit()
 else:
-  print("카메라 시작")
+  print("camera initiated")
 
 imgTemp = getImg(vid)
 width = imgTemp.shape[1]; height = imgTemp.shape[0]
@@ -37,7 +41,7 @@ frameBg = getImg(vid)
 frameBg = cv2.cvtColor(frameBg.copy(), cv2.COLOR_BGR2GRAY)
 meanX = round(width/2); meanY = round(height/2)
 
-while(True):
+for i in range(240):
   frame = getImg(vid)
   frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
   imgDiff = cv2.absdiff(frame, frameBg)
@@ -50,20 +54,19 @@ while(True):
 
   img_X2 = img_X2.astype(np.uint32)
   img_Y2 = img_Y2.astype(np.uint32)
-
   count = np.count_nonzero(img_X2)
-  if count > 300:
+  if count > 50:
     meanX = round(img_X2.sum()/count)
     meanY = round(img_Y2.sum()/count)
 
     print('\rcenter = ', meanX, meanY, count, end="")
-
+  
+  maskCp = cv2.multiply(mask, 255)
   imgClr = cv2.cvtColor(maskCp, cv2.COLOR_GRAY2BGR)
   cv2.circle(imgClr, (meanX, meanY), 5, (0,0,255), 2)
   cv2.imshow("soda", imgClr)
 
-  key = cv2.waitKey(33)
-  if (key==ord('q')):
-    break
+  frameBg = frame
+  time.sleep(0.033)
 
-freeCam(vid, "no error")
+freeCam(vid, 'no error')
