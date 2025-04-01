@@ -1,3 +1,5 @@
+#주피터에다가 코드 붙여넣기기
+
 import time
 import numpy as np
 from pop import Util
@@ -45,7 +47,7 @@ for i in range(240):
   frame = getImg(vid)
   frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
   imgDiff = cv2.absdiff(frame, frameBg)
-  ret, mask = cv2.threshold(imgDiff, 120, 1, cv2.THRESH_BINARY)
+  ret, mask = cv2.threshold(imgDiff, 30, 1, cv2.THRESH_BINARY)
   maskCp = cv2.multiply(mask, 255)
   imgBin16 = mask.astype(np.uint16)
 
